@@ -1,4 +1,5 @@
 // TODO: Import controller
+import * as controller from "./controller.js"
 export {init, updateDisplay}
 
 // *********************************
@@ -26,9 +27,15 @@ const visualBalls = {
   "🟢": "green-ball.png"
 }
 
+const modelToview = Map();
+function getVisualBall(node){
+
+}
+
 function updateDisplay(model) {
   // Update the entire chain
-
+  console.log("view updated");
+  
   const visualChain = document.querySelector("#chain");
   // remove everything
   visualChain.innerHTML = "";
@@ -37,8 +44,11 @@ function updateDisplay(model) {
   // - find the first, loop while it isn't null, inside the loop: find the next
 
   // TODO: Find the first ball
+  let ball = model.getFirstBall()
+  
+
   // TODO: loop while the ball isn't null
-  while( ) {
+  while(ball != null ) {
     // add visual ball
     const visualBall = createVisualBall(ball.data);
     visualChain.append(visualBall);
@@ -46,6 +56,7 @@ function updateDisplay(model) {
     addButtonTo(visualBall, ball);
 
     // TODO: find the next ball and loop the loop
+    ball = model.getNextBall(ball)
 
   }
 

@@ -24,17 +24,17 @@ function dump() {
 
 // **** WRAPPERS ****
 function addRandomBall() {
-  // TODO: Implement
+  const ball = randomBall()
+  list.add(ball)
 }
 
 function addBall(ball) {
-  // TODO: Implement
+  list.add(ball)
+
 }
 
-// TODO: Implement more functions
-
 function numberOfBalls() {
-  // TODO: Implement
+  return list.size()
 }
 
 // **** CANNON ****

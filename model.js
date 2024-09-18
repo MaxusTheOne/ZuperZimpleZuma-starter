@@ -1,12 +1,11 @@
 import SimpleLinkedList from "./simplelinkedlist.js";
 
-export {init, getFirstBall, getNextBall, getCannonBall,dump,addRandomBall,addRandomBalls,findMatches,removeMatches,insertBallAfterWIthNum}
-
+export {init, getFirstBall, getNextBall, getCannonBall,dump,addRandomBall,addRandomBalls,findMatches,removeMatches,insertBallAfterWIthNum,loadCannon,insertBallAfter}
 const list = new SimpleLinkedList();
 
 function init() {
   console.log("Model init");
-
+  loadCannon()
 }
 
 function dump() {
@@ -71,6 +70,7 @@ let cannonBall;
 
 function loadCannon() {
   cannonBall = randomBall();
+  return cannonBall;
 }
 
 function getCannonBall() {
@@ -84,19 +84,24 @@ function findMatches(node) {
   const matches = [node]
   let lookAt = node
   //Before
-  while (lookAt.prev.data == node.data){
+  if (lookAt.prev != null){
+    while (lookAt.prev.data == node.data && lookAt.prev != null){
 
-    matches.push(lookAt.prev)
-    lookAt = lookAt.prev
+      matches.push(lookAt.prev)
+      lookAt = lookAt.prev
+      if (lookAt.prev == null) break;
+    }
   }
   lookAt = node
   //After
-  while (lookAt.next.data == node.data){
+  if (lookAt.next != null){
+    while (lookAt.next.data == node.data){
 
-    matches.push(lookAt.next)
-    lookAt = lookAt.next
+      matches.push(lookAt.next)
+      lookAt = lookAt.next
+      if (lookAt.next == null) break;
+    }
   }
-
   return matches
 }
 

@@ -16,8 +16,7 @@ function init() {
 function addNewBall() {
   console.log("View clicked add new ball"); 
   // notify controller
-  console.log("TODO: Notify controller that we want to add a new ball to the chain!")
-  // TODO: Notify controller that we want to add a new ball to the chain!
+  controller.addNewBall();
 }
 
 const visualBalls = {
@@ -27,7 +26,7 @@ const visualBalls = {
   "🟢": "green-ball.png"
 }
 
-const modelToview = Map();
+const modelToview = new Map();
 function getVisualBall(node){
 
 }
@@ -88,8 +87,7 @@ function addButtonTo(visualBall, ballModel) {
     console.log(`Clicked button after ${ballModel.data}`);
     console.log(ballModel);
     // notify controller
-    console.log("TODO: Notify controller that we want to insert the cannonball after this!")
-    // TODO: Notify controller that we want to insert the cannonball after this!
+    controller.insertBallAfterNode(ballModel)
 
   });
 }

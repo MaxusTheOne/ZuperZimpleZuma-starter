@@ -30,8 +30,12 @@ function createInitialChain() {
 // TODO: Add controller functions to handle things happening in the view
 
 function addNewBall(){
-  model.addRandomBall()
+  const newBall = model.addRandomBall()
   view.updateDisplay(model)
+  
+  view.animateNewBall(model,view.getVisualBallForModelNode(newBall))
+  return newBall
+
 }
 
 function insertBallAfterNode(node){

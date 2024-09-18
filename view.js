@@ -1,6 +1,7 @@
 // TODO: Import controller
 import * as controller from "./controller.js"
-export {init, updateDisplay}
+import { animateNewBall } from "./animations.js";
+export {init, updateDisplay, getVisualBallForModelNode,animateNewBall}
 
 // *********************************
 // *                               *
@@ -16,7 +17,8 @@ function init() {
 function addNewBall() {
   console.log("View clicked add new ball"); 
   // notify controller
-  controller.addNewBall();
+  const newBallNode = controller.addNewBall();
+  
 }
 
 const visualBalls = {
@@ -26,9 +28,9 @@ const visualBalls = {
   "🟢": "green-ball.png"
 }
 
-const modelToview = new Map();
-function getVisualBall(node){
-
+const nodeToVisualBall  = new Map();
+function getVisualBallForModelNode(ballNode) {
+  return nodeToVisualBall.get(ballNode);
 }
 
 function updateDisplay(model) {
@@ -42,20 +44,20 @@ function updateDisplay(model) {
   // iterate through model of balls with the usual linked list method:
   // - find the first, loop while it isn't null, inside the loop: find the next
 
-  // TODO: Find the first ball
-  let ball = model.getFirstBall()
+
+  let ballNode = model.getFirstBall()
   
 
-  // TODO: loop while the ball isn't null
-  while(ball != null ) {
+  while(ballNode != null ) {
     // add visual ball
-    const visualBall = createVisualBall(ball.data);
+    const visualBall = createVisualBall(ballNode.data);
     visualChain.append(visualBall);
     // add button next to ball
-    addButtonTo(visualBall, ball);
+    addButtonTo(visualBall, ballNode);
+    nodeToVisualBall.set(ballNode, visualBall);
 
-    // TODO: find the next ball and loop the loop
-    ball = model.getNextBall(ball)
+    // get next ball
+    ballNode = model.getNextBall(ballNode)
 
   }
 

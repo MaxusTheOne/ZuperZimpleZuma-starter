@@ -24,8 +24,8 @@ function dump() {
 // **** WRAPPERS ****
 function addRandomBall() {
   const ball = randomBall()
-  list.add(ball)
-  return ball
+  
+  return list.add(ball)
 }
 function addRandomBalls(int) {
   for (let i = 0; i < int; i++) {

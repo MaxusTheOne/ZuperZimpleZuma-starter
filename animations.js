@@ -1,5 +1,6 @@
 import * as view from "./view.js";
 import * as controller from "./controller.js"
+export {animateNewBall}
 
 // TODO: Export animation functions
 // ALSO: Remember to import the same functions in view
@@ -15,7 +16,8 @@ function animateNewBall(model, newBall) {
   view.updateDisplay(model)
 
   // Find the visualBall for this newBall
-  const visualBall; // TODO: get the visual Ball from the view
+  const visualBall = newBall
+  
 
   // We only want to animate the image - not the entire div with the button
   const onlyImg = visualBall.firstElementChild;
@@ -25,7 +27,10 @@ function animateNewBall(model, newBall) {
   // Last: - position to end - the current position of the visualBall
   
   // Invert - calculate difference
-  
+
+  // temp prop.. I think
+  onlyImg.style.setProperty("--delta-x", "1500px");
+
   // Play animation
   onlyImg.classList.add("animate-add");
   onlyImg.addEventListener("animationend", doneAnimateNewBall);
@@ -56,7 +61,7 @@ function animateCannonBall(model, newBall) {
   view.updateDisplay(model);
 
   // Find the visualBall for this newBall
-  const visualBall; // TODO: get the visual Ball from the view
+  const visualBall = view.getVisualBallForModelNode(newBall)
 
   // Animate the space for the new ball
   animateExpandSpaceForBall(visualBall);
@@ -75,8 +80,8 @@ function animateCannonBall(model, newBall) {
   // TODO: Find the position (x and y) of the ballImage
 
   // Invert: calculate the distance to move from source to destination
-  const deltaX; 
-  const deltaY;
+  const deltaX = 100; 
+  const deltaY = 100; 
 
   // Play: run the animation from source to destination
   ballImage.style.setProperty("--delta-x", deltaX + "px");

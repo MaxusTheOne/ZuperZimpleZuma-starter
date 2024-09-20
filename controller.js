@@ -49,8 +49,9 @@ function insertBallAfterNode(node){
   let nodeArr = []
   nodeArr = model.findMatches(newNode)
   if (nodeArr.length >= 3) {
-    view.animateRemoveBalls(model,nodeArr)
-    // matchesRemoved(nodeArr)
+    // view.animateRemoveBalls(model,nodeArr)
+    model.removeMatches(nodeArr)
+    view.updateDisplay(model)
   }
   
 }

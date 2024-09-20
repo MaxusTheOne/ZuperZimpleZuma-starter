@@ -1,0 +1,1 @@
+pages: https://maxustheone.github.io/ZuperZimpleZuma-starter/animations.html

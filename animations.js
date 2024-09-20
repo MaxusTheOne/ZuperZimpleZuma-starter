@@ -1,6 +1,6 @@
 import * as view from "./view.js";
 import * as controller from "./controller.js"
-export {animateNewBall}
+export {animateNewBall,animateCannonBall,animateRemoveBalls}
 
 // TODO: Export animation functions
 // ALSO: Remember to import the same functions in view
@@ -16,27 +16,37 @@ function animateNewBall(model, newBall) {
   view.updateDisplay(model)
 
   // Find the visualBall for this newBall
-  const visualBall = newBall
+  const visualBall = view.getVisualBallForModelNode(newBall)
   
 
   // We only want to animate the image - not the entire div with the button
   const onlyImg = visualBall.firstElementChild;
+  console.log(onlyImg);
+  
 
   // First: - position to start from - somewhere just outside the screen
+    const chainBox = document.getElementById("chain");
+    const chainBoxRect = chainBox.getBoundingClientRect();
+    
+    
     
   // Last: - position to end - the current position of the visualBall
+    const ballRect = visualBall.getBoundingClientRect();
+  
+  
   
   // Invert - calculate difference
+  const distance = chainBoxRect.right - ballRect.left
 
   // temp prop.. I think
-  onlyImg.style.setProperty("--delta-x", "1500px");
-
+  onlyImg.style.setProperty("--delta-x", distance + "px");
+  
   // Play animation
   onlyImg.classList.add("animate-add");
   onlyImg.addEventListener("animationend", doneAnimateNewBall);
   function doneAnimateNewBall(event) {
-    onlyImg.removeEventListener("animationend", doneAnimateNewBall);
-    onlyImg.classList.remove("animate-add");
+    // onlyImg.removeEventListener("animationend", doneAnimateNewBall);
+    // onlyImg.classList.remove("animate-add");
   }
 }
 
@@ -58,7 +68,7 @@ function animateExpandSpaceForBall( visualBall ) {
  */
 function animateCannonBall(model, newBall) {
   // Start by updating the entire model
-  view.updateDisplay(model);
+  view.updateDisplay(model)
 
   // Find the visualBall for this newBall
   const visualBall = view.getVisualBallForModelNode(newBall)
@@ -70,18 +80,25 @@ function animateCannonBall(model, newBall) {
   // to the current position of the visualBall
 
   // First: Find the starting position of the ball - which is where the cannonball is
-  const visualCannonball = document.querySelector("#cannon .ball img");
+  const visualCannonball = document.querySelector("#cannon .ball img").getBoundingClientRect();
   
   // TODO: Find the position (x and y) of the visualCannonBall
+  const visualCannonballxy = [visualCannonball.x, visualCannonball.y]
+  console.log(visualCannonballxy);
+  
   
   // Last: Find the destination position of the ball - which is where it has been added
   const ballImage = visualBall.querySelector("img"); // only use the img, not the entire element with the button
-  
+  const ballImageProps = ballImage.getBoundingClientRect()
+
   // TODO: Find the position (x and y) of the ballImage
+  const ballImagexy = [ballImageProps.x, ballImageProps.y]
 
   // Invert: calculate the distance to move from source to destination
-  const deltaX = 100; 
-  const deltaY = 100; 
+  const deltaX = visualCannonballxy[0] - ballImagexy[0]; 
+  const deltaY = visualCannonballxy[1] - ballImagexy[1]; 
+  console.log(deltaX,deltaY);
+  
 
   // Play: run the animation from source to destination
   ballImage.style.setProperty("--delta-x", deltaX + "px");
@@ -108,6 +125,7 @@ function animateCannonBall(model, newBall) {
 
 function animateRemoveBalls(model, balls) {
   // NOTE: Run the animation-implode animations BEFORE updating the view
+  console.log("removing matches", balls);
   
 
   
@@ -115,13 +133,15 @@ function animateRemoveBalls(model, balls) {
   const lastBall = balls[balls.length-1];
   const nextBall = model.getNextBall(lastBall);
   for(const ball of balls) {
-    const visualBall = view.getViewForModel(ball);
+    const visualBall = view.getVisualBallForModelNode(ball);
     visualBall.classList.add("implode");  
     if(first) {
       first = false;
       visualBall.addEventListener("animationend", () => {
+        console.log("removeAnimation end");
+        
+        controller.matchesRemoved([nextBall]);
         view.updateDisplay(model);    
-        controller.matchesRemoved(nextBall);
       });
     }  
   }

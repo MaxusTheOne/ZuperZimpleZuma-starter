@@ -2,7 +2,7 @@ import * as model from "./model.js";
 import * as view from "./view.js";
 
 // TODO: Export functions used by the view
-export {createInitialChain, addNewBall,insertBallAfterNode}
+export {createInitialChain, addNewBall,insertBallAfterNode,matchesRemoved}
 
 window.addEventListener("load", init);
 
@@ -31,22 +31,28 @@ function createInitialChain() {
 
 function addNewBall(){
   const newBall = model.addRandomBall()
-  view.updateDisplay(model)
-  
-  view.animateNewBall(model,view.getVisualBallForModelNode(newBall))
+  view.animateNewBall(model,newBall)
   return newBall
 
 }
 
+function matchesRemoved(node){
+  model.removeMatches(node)
+}
+
 function insertBallAfterNode(node){
   const newNode = model.insertBallAfter(node, model.getCannonBall())
+  
   model.loadCannon()
+  view.animateCannonBall(model,newNode)
 
   let nodeArr = []
   nodeArr = model.findMatches(newNode)
-  if (nodeArr.length >= 3) model.removeMatches(nodeArr)
+  if (nodeArr.length >= 3) {
+    view.animateRemoveBalls(model,nodeArr)
+    // matchesRemoved(nodeArr)
+  }
   
-  view.updateDisplay(model)
 }
 
 

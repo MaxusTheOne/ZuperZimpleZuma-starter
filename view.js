@@ -1,7 +1,7 @@
 // TODO: Import controller
 import * as controller from "./controller.js"
-import { animateNewBall } from "./animations.js";
-export {init, updateDisplay, getVisualBallForModelNode,animateNewBall}
+import { animateNewBall,animateCannonBall,animateRemoveBalls } from "./animations.js";
+export {init, updateDisplay, getVisualBallForModelNode,animateNewBall,animateCannonBall,animateRemoveBalls}
 
 // *********************************
 // *                               *

@@ -1,7 +1,7 @@
 /* animations */
 
 .animate-add {
-  animation: newBall 1s ease-in 1;
+  animation: newBall 3s ease-in 1;
 }
 
 @keyframes newBall {
